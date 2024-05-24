@@ -1,0 +1,27 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de contraseñas</title>
+    <link rel="stylesheet" href="style.css">   
+</head>
+<body>
+    <div class="container">
+        <h1>Generador de contraseñas</h1>
+        <p>Crea contraseñas con un buen nivel de robustez. </p>
+        <label for="cantidadCaracteres">Introduce la longitud de la contraseña </label>
+        <p id="instruccion">(Desde 8 a 20 carácteres. Recuerda que mientras más carácteres posea la contraseña más fuerte será)</p>
+        <input type="number" id="largoDeContrasenia" name="largoDeContrasenia" min="8" max="20" placeholder="N°">
+        <div class="buttons">
+            <button onclick="generarContrasenas()" id="generarContrasenas">Generar contraseña</button>
+            <button onclick="limpiar()">Limpiar Resultados</button>
+            <button onclick="copiar()">Copiar Contraseña</button>
+            <button onclick="verificarContrasena()">Verificar Robustez</button>
+        </div>
+        <p id="resultadoTexto" style="display: none;">Contraseña generada:</p>
+        <input type="text" id="resultado" readonly>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+
