@@ -6,15 +6,21 @@ function generarContrasenas() {
     const resultadoTexto = document.getElementById('resultadoTexto');
 
     //verificar que el usuario solo introduzca valores numericos
-    if (!largoDeContrasenia || isNaN(largoDeContrasenia) || largoDeContrasenia < 8 || largoDeContrasenia > 20) {
-        alert('La contraseña debe tener minimo 8 caracteres');
+    if (!largoDeContrasenia || isNaN(largoDeContrasenia) || largoDeContrasenia < 12 || largoDeContrasenia > 20) {
+        alert('La contraseña debe tener entre 12 y 20 caracteres');
         return;
     }
 
+    // Generador criptográficamente seguro
+    const array = new Uint32Array(largoDeContrasenia);
+    window.crypto.getRandomValues(array);
+
     let contrasenia = '';
     for (let i = 0; i < largoDeContrasenia; i++) {
-        contrasenia += char.charAt(Math.floor(Math.random() * char.length));
+        const index = array[i] % char.length; // distribuye de forma uniforme
+        contrasenia += char.charAt(index);
     }
+
     resultadoTexto.style.display = 'block';
     resultadoInput.value = contrasenia;
 }
@@ -27,7 +33,7 @@ function limpiar() {
 }
 
 //funcion para copiar la contraseña
-function copiar(){
+function copiar() {
     const resultadoInput = document.getElementById('resultado');
     resultadoInput.select();
     resultadoInput.setSelectionRange(0, 99999); // Para celulares
@@ -42,7 +48,7 @@ function copiar(){
 }
 
 //function para verificar la robustez de la contraseña
-function verificarContrasena(){
+function verificarContrasena() {
     const resultadoInput = document.getElementById('resultado');
     const contrasenia = resultadoInput.value.trim();
 
