@@ -5,6 +5,11 @@ function generarContrasenas() {
     const resultadoTexto = document.getElementById('resultadoTexto');
 
     //caracteres para la contraseña
+    const letrasMin = 'abcdefghijklmnopqrstuvwxyz';
+    const letrasMay = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const numeros = '0123456789';
+    const simbolos = '`~!@#$%^&*()-_.,?';
+    const todos = letrasMin + letrasMay + numeros + simbolos;
 
 
     //verificar que el usuario solo introduzca valores numericos
@@ -21,7 +26,7 @@ function generarContrasenas() {
     contrasenia += simbolos.charAt(Math.floor(crypto.getRandomValues(new Uint32Array(1))[0] % simbolos.length));
 
     // Completar el resto aleatoriamente
-    const array = new Uint32Array(largo - 4);
+    const array = new Uint32Array(largoDeContrasenia - 4);
     crypto.getRandomValues(array);
     for (let i = 0; i < array.length; i++) {
         contrasenia += todos.charAt(array[i] % todos.length);
