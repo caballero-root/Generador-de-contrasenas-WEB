@@ -8,8 +8,8 @@ function generarContrasenas() {
 
 
     //verificar que el usuario solo introduzca valores numericos
-    if (!largoDeContrasenia || isNaN(largoDeContrasenia) || largoDeContrasenia < 12 || largoDeContrasenia > 32) {
-        alert('La contraseña debe tener entre 12 y 32 caracteres');
+    if (!largoDeContrasenia || isNaN(largoDeContrasenia) || largoDeContrasenia < 16 || largoDeContrasenia > 32) {
+        alert('La contraseña debe tener entre 16 y 32 caracteres');
         return;
     }
 
