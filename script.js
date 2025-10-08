@@ -1,25 +1,39 @@
 //funcion para generar contraseñas
 function generarContrasenas() {
     const largoDeContrasenia = document.getElementById('largoDeContrasenia').value;
-    const char = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ`~!@#$%^&*()-_.,?';
     const resultadoInput = document.getElementById('resultado');
     const resultadoTexto = document.getElementById('resultadoTexto');
 
+    //caracteres para la contraseña
+
+
     //verificar que el usuario solo introduzca valores numericos
-    if (!largoDeContrasenia || isNaN(largoDeContrasenia) || largoDeContrasenia < 12 || largoDeContrasenia > 20) {
-        alert('La contraseña debe tener entre 12 y 20 caracteres');
+    if (!largoDeContrasenia || isNaN(largoDeContrasenia) || largoDeContrasenia < 12 || largoDeContrasenia > 32) {
+        alert('La contraseña debe tener entre 12 y 32 caracteres');
         return;
     }
 
-    // Generador criptográficamente seguro
-    const array = new Uint32Array(largoDeContrasenia);
-    window.crypto.getRandomValues(array);
-
+    // Asegurar al menos un carácter de cada tipo
     let contrasenia = '';
-    for (let i = 0; i < largoDeContrasenia; i++) {
-        const index = array[i] % char.length; // distribuye de forma uniforme
-        contrasenia += char.charAt(index);
+    contrasenia += letrasMin.charAt(Math.floor(crypto.getRandomValues(new Uint32Array(1))[0] % letrasMin.length));
+    contrasenia += letrasMay.charAt(Math.floor(crypto.getRandomValues(new Uint32Array(1))[0] % letrasMay.length));
+    contrasenia += numeros.charAt(Math.floor(crypto.getRandomValues(new Uint32Array(1))[0] % numeros.length));
+    contrasenia += simbolos.charAt(Math.floor(crypto.getRandomValues(new Uint32Array(1))[0] % simbolos.length));
+
+    // Completar el resto aleatoriamente
+    const array = new Uint32Array(largo - 4);
+    crypto.getRandomValues(array);
+    for (let i = 0; i < array.length; i++) {
+        contrasenia += todos.charAt(array[i] % todos.length);
     }
+
+    // Mezclar (Fisher-Yates shuffle)
+    contrasenia = contrasenia.split('');
+    for (let i = contrasenia.length - 1; i > 0; i--) {
+        const j = crypto.getRandomValues(new Uint32Array(1))[0] % (i + 1);
+        [contrasenia[i], contrasenia[j]] = [contrasenia[j], contrasenia[i]];
+    }
+    contrasenia = contrasenia.join('');
 
     resultadoTexto.style.display = 'block';
     resultadoInput.value = contrasenia;
